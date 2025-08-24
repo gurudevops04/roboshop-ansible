@@ -18,9 +18,9 @@
     state: present
 
 - name: Update the mongodb listen address
-  ansible.builtin.copy: 
-    src: /etc/mongod.conf 
-    dest: /etc/mongod.conf.bak
+  # ansible.builtin.copy: 
+  #   src: /etc/mongod.conf 
+  #   dest: /etc/mongod.conf.bak
   ansible.builtin.command: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
 
 #  ansible.builtin.shell: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
