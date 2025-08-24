@@ -22,8 +22,8 @@
 
 - name: Remove the nginx default content
   ansible.builtin.file:
-  path: /usr/share/nginx/html
-  state: absent
+    path: /usr/share/nginx/html
+    state: absent
 
 - name: Create the nginx html directory
   ansible.builtin.file:
