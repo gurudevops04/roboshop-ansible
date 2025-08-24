@@ -15,13 +15,19 @@
 - name: Install mongodb
   dnf:
     name: mongodb-org
-    state: present
+    state: installed
 
-- name: Update the mongodb listen address
+- name: Replace listen address
+  ansible.builtin.replace:
+  path: /etc/mongod.conf
+  regexp: '127.0.0.1'
+  replace: '0.0.0.0'
+
+#- name: Update the mongodb listen address
   # ansible.builtin.copy: 
   #   src: /etc/mongod.conf 
   #   dest: /etc/mongod.conf.bak
-  ansible.builtin.command: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
+#  ansible.builtin.command: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
 
 #  ansible.builtin.shell: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
   # args:
@@ -32,7 +38,7 @@
 # so the command will not run again
 
 - name: Enable and start mongodb
-  ansible.builtin.service:
+  ansible.builtin.systemd_service:
     name: mongod
     state: started
     enabled: yes
