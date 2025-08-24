@@ -1,0 +1,37 @@
+# cp mongo.repo /etc/yum.repos.d/mongo.repo
+
+# dnf install mongodb-org -y
+
+# sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
+
+# systemctl enable mongod 
+# systemctl start mongod 
+
+- name: Copy the mongo repo file
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Install mongodb
+  dnf:
+    name: mongodb-org
+    state: present
+
+- name: Update the mongodb listen address
+  args:
+    creates: /etc/mongod.conf.bak
+  ansible.builtin.command: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
+
+#  ansible.builtin.shell: sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
+  # args:
+  #   creates: /etc/mongod.conf.bak
+# to avoid running the command again and again
+# if the file is already modified then it will create a backup file
+# so next time when the playbook is run it will not create the backup file again
+# so the command will not run again
+
+- name: Enable and start mongodb
+  ansible.builtin.service:
+    name: mongod
+    state: started
+    enabled: yes
