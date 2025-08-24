@@ -27,8 +27,8 @@
 
 - name: Create the nginx html directory
   ansible.builtin.file:
-  path: /usr/share/nginx/html
-  state: directory
+    path: /usr/share/nginx/html
+    state: directory
 
 - name: Download the nginx content
   ansible.builtin.unarchive:
