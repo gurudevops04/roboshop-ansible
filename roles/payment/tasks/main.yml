@@ -1,9 +1,10 @@
-# - name: Load nodejs
+# - name: Load Python
 #   ansible.builtin.import_role:
 #     name: common
-#     tasks_from: nodejs
+#     tasks_from: python
 
-- name: Load Docker
+- name: Load Python
   ansible.builtin.import_role:
     name: common
     tasks_from: docker
+
